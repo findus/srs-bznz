@@ -11,12 +11,31 @@
 (function() {
     'use strict';
 
+      function checkIfInsideEditor(element) {
+         if (element !== null && element.nodeName === "FILE-ATTACHMENT") {
+             return true;
+         } else {
+               if (element !== null && element.parentNode !== undefined) {
+                   return checkIfInsideEditor(element.parentNode);
+               } else {
+                   return false;
+               }
+         }
+     }
+
      function replace(element) {
         Array.from(element.childNodes.entries(), ([key, value]) => value).map(element => {
                     replace(element);
         });
-        if (element.nodeType === Node.TEXT_NODE && (element.tagName !== "STYLE" && element.parentElement.nodeName !== "STYLE" && element.tagName !== "SCRIPT" && element.parentElement.nodeName !== "SCRIPT" ) ) {
-            element.textContent = element.textContent.replace(/BZNZ/gi, 'BZNZ');
+        var isEditor = checkIfInsideEditor(element);
+        if (element.nodeType === Node.TEXT_NODE && (isEditor === false
+                                                    && element.nodeName !== "FILE-ATTACHMENT"
+                                                    && element.tagName !== "STYLE"
+                                                    && element.parentElement.nodeName !== "STYLE"
+                                                    && element.tagName !== "SCRIPT"
+                                                    && element.parentElement.nodeName !== "SCRIPT" )
+           ) {
+            element.textContent = element.textContent.replace(/[b🅱]usiness/gi, 'BZNZ');
         }
     }
 
