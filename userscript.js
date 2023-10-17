@@ -5,10 +5,6 @@
 // @description  try to take over the world!
 // @author       You
 // @match        *://*/*
-// @exclude      *://.*google.*
-// @exclude      https://www.google.de/*
-// @exclude      https://google.de/*
-// @exclude      https://google.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -19,7 +15,7 @@
         Array.from(element.childNodes.entries(), ([key, value]) => value).map(element => {
                     replace(element);
         });
-        if (element.nodeType === Node.TEXT_NODE && element.tagName !== "STYLE" ) {
+        if (element.nodeType === Node.TEXT_NODE && (element.tagName !== "STYLE" && element.parentElement.nodeName !== "STYLE" && element.tagName !== "SCRIPT" && element.parentElement.nodeName !== "SCRIPT" ) ) {
             element.textContent = element.textContent.replace(/business/gi, 'BZNZ');
         }
     }
