@@ -5,6 +5,10 @@
 // @description  try to take over the world!
 // @author       You
 // @match        *://*/*
+// @exclude      *://.*google.*
+// @exclude      https://www.google.de/*
+// @exclude      https://google.de/*
+// @exclude      https://google.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -15,8 +19,8 @@
         Array.from(element.childNodes.entries(), ([key, value]) => value).map(element => {
                     replace(element);
         });
-        if (element.firstChild !== null && element.firstChild.nodeType === Node.TEXT_NODE && element.tagName !== "STYLE" ) {
-            element.firstChild.textContent = element.firstChild.textContent.replace(/business/gi, 'BZNZ');
+        if (element.nodeType === Node.TEXT_NODE && element.tagName !== "STYLE" ) {
+            element.textContent = element.textContent.replace(/business/gi, 'BZNZ');
         }
     }
 
@@ -34,12 +38,13 @@
     // Callback function to execute when mutations are observed
     const callback = (mutationList, observer) => {
         for (const mutation of mutationList) {
+            console.log(mutation);
             if (mutation.type === "childList") {
                // console.log("A child node has been added or removed.");
                 //mutation.addedNodes.map(e => console.log("node"));
                 Array.from(mutation.addedNodes.entries(), ([key, value]) => value).map(element => {
-                    replace(element);
-
+                    //replace(element);
+                    replace(targetNode);
                 });
             } else if (mutation.type === "attributes") {
                // console.log(`The ${mutation.attributeName} attribute was modified.`);
