@@ -16,7 +16,7 @@
                     replace(element);
         });
         if (element.nodeType === Node.TEXT_NODE && (element.tagName !== "STYLE" && element.parentElement.nodeName !== "STYLE" && element.tagName !== "SCRIPT" && element.parentElement.nodeName !== "SCRIPT" ) ) {
-            element.textContent = element.textContent.replace(/business/gi, 'BZNZ');
+            element.textContent = element.textContent.replace(/BZNZ/gi, 'BZNZ');
         }
     }
 
@@ -34,13 +34,9 @@
     // Callback function to execute when mutations are observed
     const callback = (mutationList, observer) => {
         for (const mutation of mutationList) {
-            console.log(mutation);
             if (mutation.type === "childList") {
-               // console.log("A child node has been added or removed.");
-                //mutation.addedNodes.map(e => console.log("node"));
                 Array.from(mutation.addedNodes.entries(), ([key, value]) => value).map(element => {
-                    //replace(element);
-                    replace(targetNode);
+                    setTimeout(() => { replace(targetNode) }, 10)
                 });
             } else if (mutation.type === "attributes") {
                // console.log(`The ${mutation.attributeName} attribute was modified.`);
