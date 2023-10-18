@@ -47,7 +47,7 @@
     replace(targetNode);
 
     // Options for the observer (which mutations to observe)
-    const config = { attributes: true, childList: true, subtree: true };
+    const config = { attributes: false, childList: true, subtree: true };
 
 
     // Callback function to execute when mutations are observed
@@ -55,7 +55,9 @@
         for (const mutation of mutationList) {
             if (mutation.type === "childList") {
                 Array.from(mutation.addedNodes.entries(), ([key, value]) => value).map(element => {
-                    setTimeout(() => { replace(targetNode) }, 10)
+                    setTimeout(() => {
+                        replace(element);
+                                     }, 10)
                 });
             } else if (mutation.type === "attributes") {
                // console.log(`The ${mutation.attributeName} attribute was modified.`);
