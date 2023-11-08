@@ -36,7 +36,7 @@
                                                     && element.parentElement.nodeName !== "SCRIPT" )
            ) {
             element.textContent = element.textContent.replace(/[b🅱]usiness/gi, 'BZNZ');
-        }
+        }å
     }
 
 
@@ -56,7 +56,7 @@
             if (mutation.type === "childList") {
                 Array.from(mutation.addedNodes.entries(), ([key, value]) => value).map(element => {
                     setTimeout(() => {
-                        replace(element);
+                        replace(element.parentNode);
                                      }, 10)
                 });
             } else if (mutation.type === "attributes") {
